@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import noteService from "./services/notes";
 
 const App = () => {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(null);
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -14,7 +14,12 @@ const App = () => {
     noteService.getAll().then((initialNotes) => {
       setNotes(initialNotes);
     });
-  }, []);
+  }, []); //the second paremeter specify how ofter the effect is run
+
+  //do not render anything if notes is still null
+  if (!notes) {
+    return null;
+  }
 
   const addNote = (event) => {
     event.preventDefault();
